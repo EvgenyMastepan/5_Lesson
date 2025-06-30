@@ -15,6 +15,7 @@ class ViewController: UIViewController {
         $0.dataSource = self
         $0.delegate = self
         $0.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+        $0.backgroundView = UIImageView(image: UIImage(named: "background"))
         return $0
     }(UITableView(frame: view.frame, style: .insetGrouped))
     
