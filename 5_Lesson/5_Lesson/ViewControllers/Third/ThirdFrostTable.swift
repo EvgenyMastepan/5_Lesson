@@ -1,42 +1,33 @@
 //
-//  FrostTable.swift
+//  ThirdFrostTable.swift
 //  5_Lesson
 //
-//  Created by Evgeny Mastepan on 30.06.2025.
+//  Created by Evgeny Mastepan on 02.07.2025.
 //
 
 import UIKit
 
-extension ViewController: UITableViewDataSource {
+extension ThirdViewController: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        firstDataTable.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 0 {
-            return self.firstDataTable.count
-        } else {
-            return self.secondDataTable.count
-        }
+        firstDataTable[section].count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: TableItem.cellName, for: indexPath)
+        let localTableData = firstDataTable[indexPath.section][indexPath.row]
         
         var config = cell.defaultContentConfiguration()
-        var localArray: [TableItem] = []
-        
-        switch indexPath.section {
-            case 0: localArray = self.firstDataTable
-            default: localArray = self.secondDataTable
-        }
-        config.text = localArray[indexPath.row].title
+        config.text = localTableData.title
         config.textProperties.color = .systemBlue
-        config.image = UIImage(named: localArray[indexPath.row].image)
+        config.image = UIImage(named: localTableData.image)
         config.imageProperties.maximumSize = CGSize(width: 50, height: 50)
         config.imageProperties.cornerRadius = 5
-        config.secondaryText = localArray[indexPath.row].description
+        config.secondaryText = localTableData.description
         cell.contentConfiguration = config
         
         return cell
@@ -44,15 +35,15 @@ extension ViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
         switch section {
-        case 0: return "Сценарии"
-        default: return "Строения"
+            case 0: return "Сценарии"
+            default: return "Строения"
         }
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch section {
-        case 0: return "Сценарии"
-        default: return "Строения"
+            case 0: return "Сценарии"
+            default: return "Строения"
         }
     }
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
@@ -72,20 +63,18 @@ extension ViewController: UITableViewDataSource {
     
 }
 
-extension ViewController: UITableViewDelegate {
+extension ThirdViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        var localArray: [TableItem] = []
-        switch indexPath.section {
-            case 0: localArray = firstDataTable
-            default: localArray = secondDataTable
-        }
+        let localTableData = firstDataTable[indexPath.section][indexPath.row]
+        
+// MARK: -- Отладочный код.
 //        print("Section: ", indexPath.section, "Row: ", indexPath.row)
 //        print(localArray[indexPath.row].title)
 //        print(localArray[indexPath.row].description ?? "")
-        
+
         let alert = UIAlertController(
-                    title: localArray[indexPath.row].title,
-                    message: localArray[indexPath.row].description ?? "",
+                    title: localTableData.title,
+                    message: localTableData.description ?? "",
                     preferredStyle: .alert
                 )
         alert.addAction(UIAlertAction(title: "Да понял-понял.", style: .default))
