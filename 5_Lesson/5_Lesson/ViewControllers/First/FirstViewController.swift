@@ -8,7 +8,7 @@
 import UIKit
 
 class FirstViewController: UIViewController {
-    let townDataTable = TownData.getData()
+    var townDataTable = TownData.getData()
 
     lazy var townTable: UITableView = {
         $0.dataSource = self

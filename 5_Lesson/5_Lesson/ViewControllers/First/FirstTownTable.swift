@@ -41,6 +41,12 @@ extension FirstViewController: UITableViewDelegate {
         alert.addAction(UIAlertAction(title: "Ok!.", style: .default))
                 self.present(alert, animated: true)
     }
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            townDataTable.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+        }
+    }
 }
 
 
